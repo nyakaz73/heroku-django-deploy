@@ -1,0 +1,23 @@
+name: 'Heroku Django Deploy'
+description: 'Automatically deploys a Django app to Heroku'
+inputs:
+    heroku_app_name:
+        description: 'Heroku app name'
+        required: true
+    heroku_api_key:
+        description: 'Heroku api key'
+        required: true
+    heroku_email_address:
+        description: 'Heroku email address'
+        required: true
+    want_to_login:
+        description: 'Want to login'
+        required: false
+outputs:
+    status:
+        description: "Status of the action"
+runs:
+    using: "node12"
+    main: "index.js"
+
+
