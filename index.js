@@ -23,7 +23,7 @@ const login = () => {
         createNetrcFileForLogin(heroku);
         console.log('Created file and wrote to ~/.netrc');
 
-        execSync("heroku uuth:whoami", (error, stdout, stderr) => {
+        execSync("heroku auth:whoami", (error, stdout, stderr) => {
             if (error) {
                 console.log(`exec error: ${error}`);
                 return;
