@@ -1,6 +1,12 @@
 const core = require('@actions/core');
-const { execSync, } = require('child_process')
+const { execSync, exec } = require('child_process')
 //Variables
+/*let heroku = {
+    'app_name': 'django-heroku-app001',
+    'api_key': 'c8cc8d0dc5-b53b-4d03-812e-1c09582e8fa4',
+    'email_address': 'tafadxzwalnyamukapa@gmail.com',
+    'want_to_login': true
+}*/
 let heroku = {
     'app_name': core.getInput('heroku_app_name'),
     'api_key': core.getInput('heroku_api_key'),
@@ -21,32 +27,19 @@ machine git.heroku.com
 const login = () => {
     try {
         createNetrcFileForLogin(heroku);
-        console.log('Created file and wrote to ~/.netrc');
-
-        execSync("heroku auth:whoami", (error, stdout, stderr) => {
-            if (error) {
-                console.log(`exec error: ${error}`);
-                core.setFailed(`exec error: ${error}`);
-            } else if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                core.setFailed(`stderr: ${stderr}`);
-            }
-            console.log('Logged in successfully');
-            console.log(`stdout Logged in successfully with user: ${stdout}`);
-        });
-
-    } catch (err) {
-        console.log(err);
-        core.setFailed(`${err} Failed to Login with provided credentials. `);
-        console.log('Failed to Login with provided credentials');
+        const user = execSync('heroku auth:whoami').toString();
+        console.log(`Successfully Logged in with user ${user}`);
+    } catch (error) {
+        console.log(error.message);
+        core.setFailed(`Error: ${error.message}`);
     }
 }
 
 //Run Login
 if (heroku.want_to_login) {
     login();
-    return;
 }
+console.log('After login')
 
 core.setOutput(
     "status",
