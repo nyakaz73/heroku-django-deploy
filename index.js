@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { execSync } = require('child_process')
+const { execSync, } = require('child_process')
 //Variables
 let heroku = {
     'app_name': core.getInput('heroku_app_name'),
@@ -22,7 +22,16 @@ const login = () => {
     try {
         createNetrcFileForLogin(heroku);
         console.log('Created file and wrote to ~/.netrc');
-        execSync("heroku login")
+
+        execSync("heroku uuth:whoami", (error, stdout, stderr) => {
+            if (error) {
+                console.log(`exec error: ${error}`);
+                return;
+            }
+            console.log(`stdout Logged in successfully with user: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
+
+        });
 
     } catch (err) {
         console.log(err);
@@ -33,7 +42,11 @@ const login = () => {
 //Run Login
 if (heroku.want_to_login) {
     login();
-    console.log(`${heroku.email_address} has Logged in Successfully!`);
     return;
 }
+
+core.setOutput(
+    "status",
+    "Successfully deployed app from branch"
+);
 
