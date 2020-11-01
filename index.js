@@ -28,10 +28,10 @@ const login = () => {
     try {
         createNetrcFileForLogin(heroku);
         const user = execSync('heroku auth:whoami').toString();
-        console.log(`Successfully Logged in with user ${user}`);
+        console.log(`Successfully Logged in with user: ${user}`);
     } catch (error) {
         console.log(error.message);
-        core.setFailed(`Error: ${error.message}`);
+        core.setFailed(error.message);
     }
 }
 
