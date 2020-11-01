@@ -35,11 +35,25 @@ const login = () => {
     }
 }
 
+const addRemote = () => {
+    try {
+        const gitInit = execSync('git init').toString();
+        console.log(gitInit);
+        console.log('Initialized git');
+
+
+
+    } catch (error) {
+
+    }
+}
+
 //Run Login
 if (heroku.want_to_login) {
     login();
 }
-console.log('After login')
+
+addRemote();
 
 core.setOutput(
     "status",
