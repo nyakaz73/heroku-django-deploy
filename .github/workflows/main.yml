@@ -14,9 +14,9 @@ jobs:
             uses: ./ #Uses an action in the root directory
             id: login 
             with: 
-              heroku_app_name : ''
-              heroku_api_key: ''
-              heroku_email_address: ''
+              heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
+              heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+              heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
               want_to_login: true
           #Use the output  from the hello step
           - name: Get the output status
