@@ -26,15 +26,17 @@ const login = () => {
         execSync("heroku auth:whoami", (error, stdout, stderr) => {
             if (error) {
                 console.log(`exec error: ${error}`);
-                return;
+                core.setFailed(`exec error: ${error}`);
+            } else if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                core.setFailed(`stderr: ${stderr}`);
             }
             console.log(`stdout Logged in successfully with user: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-
         });
 
     } catch (err) {
         console.log(err);
+        core.setFailed(`${err} Failed to Login with provided credentials. `);
         console.log('Failed to Login with provided credentials');
     }
 }
