@@ -31,6 +31,7 @@ const login = () => {
                 console.log(`stderr: ${stderr}`);
                 core.setFailed(`stderr: ${stderr}`);
             }
+            console.log('Logged in successfully');
             console.log(`stdout Logged in successfully with user: ${stdout}`);
         });
 
