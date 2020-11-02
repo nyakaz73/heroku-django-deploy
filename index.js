@@ -85,7 +85,7 @@ deployWithGit = () => {
         if (heroku.disable_collect_static) {
             disableCollectStatic();
         }
-        const push = execSync("git push heroku master -f").toString();
+        const push = execSync("git push heroku master").toString();
         console.log(push);
         const migrate = execSync("heroku run python manage.py migrate").toString();
         console.log(migrate);
