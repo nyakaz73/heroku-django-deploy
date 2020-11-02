@@ -6,7 +6,7 @@ let heroku = {
     'app_name': core.getInput('heroku_app_name'),
     'api_key': core.getInput('heroku_api_key'),
     'email_address': core.getInput('heroku_email_address'),
-    'want_to_login': core.getInput('want_to_login'),
+    'want_to_login': core.getInput('want_to_just_login'),
     'use_git': core.getInput('use_git'),
     'use_docker': core.getInput('use_docker'),
 }
@@ -82,7 +82,7 @@ const pushAndRelease = ({ use_docker, use_git }) => {
             console.log('Error : One deployment method at a time is allowed');
         } else {
             //Nothing is configured attempting to use default git
-            console.log('No deplyment method is configured. Attempting to use default git...');
+            console.log('No deployment method is specified. Attempting to use default use git...');
             deployWithGit();
         }
     } catch (error) {
@@ -92,11 +92,12 @@ const pushAndRelease = ({ use_docker, use_git }) => {
 }
 
 //Run Login
-if (heroku.want_to_login) {
+if (heroku.want_to_just_login) {
     login();
-    //return , use return if user jus want to login
+    return //, use return if user jus want to login
 }
 
+login();
 addRemote(docker);
 pushAndRelease(docker);
 
