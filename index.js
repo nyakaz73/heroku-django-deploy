@@ -9,6 +9,7 @@ let heroku = {
     'want_to_login': core.getInput('want_to_just_login'),
     'use_git': core.getInput('use_git'),
     'use_docker': core.getInput('use_docker'),
+    'disable_collect_static': core.getInput('disable_collect_static')
 }
 
 //Create Netrc cat file used during login with cli.
@@ -23,7 +24,7 @@ machine git.heroku.com
         `);
 }
 //Login method to check if user is logged in.
-const login = () => {
+login = () => {
     try {
         createNetrcFileForLogin(heroku);
         const user = execSync('heroku auth:whoami').toString();
@@ -34,7 +35,7 @@ const login = () => {
     }
 }
 
-const checkIfRepoIsShallow = () => {
+checkIfRepoIsShallow = () => {
     // Check if Repo clone is shallow
     const isShallow = execSync(
         "git rev-parse --is-shallow-repository"
@@ -45,8 +46,13 @@ const checkIfRepoIsShallow = () => {
         execSync("git fetch --prune --unshallow");
     }
 }
+
+disableCollectStatic = () => {
+    const disableC = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
+    console.log(disableC);
+}
 //Adding remote repo to heroku.
-const addRemote = ({ app_name }) => {
+addRemote = ({ app_name }) => {
     try {
         const gitInit = execSync('git init').toString();
         console.log(gitInit);
@@ -59,7 +65,7 @@ const addRemote = ({ app_name }) => {
 }
 
 
-const deployWithDocker = () => {
+deployWithDocker = () => {
 
 }
 deployWithGit = () => {
@@ -76,6 +82,9 @@ deployWithGit = () => {
         }
         //before push check if it is shallow then unshallow if it is
         checkIfRepoIsShallow();
+        if (heroku.disable_collect_static) {
+            disableCollectStatic();
+        }
         const push = execSync("git push heroku master").toString();
         console.log(push);
         const migrate = execSync("heroku run python manage.py migrate").toString();
@@ -83,25 +92,10 @@ deployWithGit = () => {
     } catch (error) {
         console.log(error.message);
         core.setFailed(error.message);
-        console.log("Attempting to disable `collecstatic` cmd");
-        /*try {
-            const disable = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
-            console.log(disable);
-            const push = execSync("git push heroku master").toString();
-            console.log(push);
-            const migrate = execSync("heroku run python manage.py migrate").toString();
-            console.log(migrate);
-        } catch (error) {
-            core.setFailed(error.message);
-            console.log(error.message);
-        }*/
     }
 }
 pushAndRelease = ({ use_docker, use_git }) => {
-    console.log('Now in push and Release')
-    console.log(use_docker, use_git);
     try {
-        console.log('Now in try');
         if (use_docker === true) {
             deployWithDocker();
         } else if (use_git === true) {
