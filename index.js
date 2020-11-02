@@ -39,7 +39,7 @@ const addRemote = ({ app_name }) => {
     try {
         const gitInit = execSync('git init').toString();
         console.log(gitInit);
-        const remote = execSync(`heroku git:remote -a ${app_name}`);
+        const remote = execSync(`heroku git:remote -a ${app_name}`).toString();
         console.log(remote.message);
     } catch (error) {
         core.setFailed(error.message);
@@ -53,24 +53,26 @@ const deployWithDocker = () => {
 }
 deployWithGit = () => {
     try {
-        console.log('Deploying with git')
-        const add = execSync("git add .");
+        console.log('Deploying with git');
+        execSync(`git config user.name "Heroku-Django-Deploy"`);
+        execSync(`git config user.email "${heroku.email_address}"`);
+        const add = execSync("git add .").toString();
         console.log(add);
-        const commit = execSync(`git commit -m "Initial commit" `);
+        const commit = execSync(`git commit -m "Initial commit" `).toString();
         console.log(commit);
-        const push = execSync("git push heroku master");
+        const push = execSync("git push heroku master").toString();
         console.log(push);
-        const migrate = execSync("heroku run python manage.py migrate");
+        const migrate = execSync("heroku run python manage.py migrate").toString();
         console.log(migrate);
     } catch (error) {
         console.log(error.message);
         console.log("Attempting to disable `collecstatic` cmd");
         try {
-            const disable = execSync("git config:set DISABLE_COLLECTSTATIC=1");
+            const disable = execSync("git config:set DISABLE_COLLECTSTATIC=1").toString();
             console.log(disable);
-            const push = execSync("git push heroku master");
+            const push = execSync("git push heroku master").toString();
             console.log(push);
-            const migrate = execSync("heroku run python manage.py migrate");
+            const migrate = execSync("heroku run python manage.py migrate").toString();
             console.log(migrate);
         } catch (error) {
             core.setFailed(error.message);
