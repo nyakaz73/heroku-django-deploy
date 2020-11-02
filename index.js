@@ -58,7 +58,7 @@ deployWithGit = () => {
         execSync(`git config user.email "${heroku.email_address}"`);
         const add = execSync("git add .").toString();
         console.log(add);
-        const commit = execSync(`git commit -m "Initial commit" `).toString();
+        const commit = execSync('git commit -m "Initial commit" ').toString();
         console.log(commit);
         const push = execSync("git push heroku master").toString();
         console.log(push);
@@ -67,7 +67,7 @@ deployWithGit = () => {
     } catch (error) {
         console.log(error.message);
         console.log("Attempting to disable `collecstatic` cmd");
-        try {
+        /*try {
             const disable = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
             console.log(disable);
             const push = execSync("git push heroku master").toString();
@@ -77,7 +77,7 @@ deployWithGit = () => {
         } catch (error) {
             core.setFailed(error.message);
             console.log(error.message);
-        }
+        }*/
     }
 }
 pushAndRelease = ({ use_docker, use_git }) => {
