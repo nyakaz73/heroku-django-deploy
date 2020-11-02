@@ -58,6 +58,7 @@ deployWithGit = () => {
         execSync(`git config user.email "${heroku.email_address}"`);
         const add = execSync("git add -A").toString();
         console.log(add);
+        execSync("git status")
         execSync('git commit -m "Initial commit" ').toString();
         const push = execSync("git push heroku master").toString();
         console.log(push);
