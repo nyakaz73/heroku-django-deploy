@@ -40,7 +40,7 @@ const addRemote = ({ app_name }) => {
         const gitInit = execSync('git init').toString();
         console.log(gitInit);
         const remote = execSync(`heroku git:remote -a ${app_name}`).toString();
-        console.log(remote.message);
+        console.log(remote);
     } catch (error) {
         core.setFailed(error.message);
         console.log(error.message);
@@ -56,9 +56,13 @@ deployWithGit = () => {
         console.log('Deploying with git');
         execSync(`git config user.name "Heroku-Django-Deploy"`);
         execSync(`git config user.email "${heroku.email_address}"`);
-        const add = execSync("git add -A").toString();
-        console.log(add);
-        execSync('git commit -m "Initial commit" ').toString();
+        const gadd = execSync("git add -A").toString();
+        console.log(gadd);
+        const status = execSync("git status --porcelain").toString().trim(); //checking if there is a modified file
+        console.log(status);
+        if (status) {
+            execSync(`git commit -m "Initial commit"`).toString();
+        }
         const push = execSync("git push heroku master").toString();
         console.log(push);
         const migrate = execSync("heroku run python manage.py migrate").toString();
