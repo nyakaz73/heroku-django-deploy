@@ -98,8 +98,8 @@ if (heroku.want_to_just_login) {
 }
 
 login();
-addRemote(docker);
-pushAndRelease(docker);
+addRemote(heroku);
+pushAndRelease(heroku);
 
 core.setOutput(
     "status",
