@@ -13,6 +13,7 @@ inputs:
     want_to_just_login:
         description: 'Want to just login'
         required: false
+        default: false
     use_git:
         description: 'Deploy using git'
         required: false

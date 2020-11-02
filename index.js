@@ -52,17 +52,24 @@ const deployWithDocker = () => {
 }
 const deployWithGit = () => {
     try {
-        execSync("git add .");
-        execSync(`git commit -m "Initial commit" `);
-        execSync("git push heroku master");
-        execSync("heroku run python manage.py migrate");
+        const add = execSync("git add .");
+        console.log(add);
+        const commit = execSync(`git commit -m "Initial commit" `);
+        console.log(commit);
+        const push = execSync("git push heroku master");
+        console.log(push);
+        const migrate = execSync("heroku run python manage.py migrate");
+        console.log(migrate);
     } catch (error) {
         console.log(error.message);
         console.log("Attempting to disable `collecstatic` cmd");
         try {
-            execSync("git config:set DISABLE_COLLECTSTATIC=1");
-            execSync("git push heroku master");
-            execSync("heroku run python manage.py migrate");
+            const disable = execSync("git config:set DISABLE_COLLECTSTATIC=1");
+            console.log(disable);
+            const push = execSync("git push heroku master");
+            console.log(push);
+            const migrate = execSync("heroku run python manage.py migrate");
+            console.log(migrate);
         } catch (error) {
             core.setFailed(error.message);
             console.log(error.message);
@@ -92,10 +99,10 @@ const pushAndRelease = ({ use_docker, use_git }) => {
 }
 
 //Run Login
-if (heroku.want_to_just_login) {
-    login();
-    return //, use return if user jus want to login
-}
+// if (heroku.want_to_just_login) {
+//     login();
+//     return //, use return if user jus want to login
+// }
 
 login();
 addRemote(heroku);
