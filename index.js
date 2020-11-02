@@ -40,7 +40,7 @@ const addRemote = ({ app_name }) => {
         const gitInit = execSync('git init').toString();
         console.log(gitInit);
         const remote = execSync(`heroku git:remote -a ${app_name}`);
-        console.log(remote);
+        console.log(remote.message);
     } catch (error) {
         core.setFailed(error.message);
         console.log(error.message);
@@ -79,6 +79,7 @@ const deployWithGit = () => {
 }
 const pushAndRelease = ({ use_docker, use_git }) => {
     console.log('Now in push and Release')
+    console.log(use_docker, use_git);
     try {
         if (use_docker) {
             deployWithDocker();
