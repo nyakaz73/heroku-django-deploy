@@ -70,7 +70,7 @@ deployWithDocker = () => {
 }
 deployWithGit = () => {
     try {
-        console.log('Deploying with git');
+        console.log('Deploying with git...');
         execSync(`git config user.name "Heroku-Django-Deploy"`);
         execSync(`git config user.email "${heroku.email_address}"`);
         const gadd = execSync("git add -A").toString();
@@ -85,7 +85,7 @@ deployWithGit = () => {
         if (heroku.disable_collect_static) {
             disableCollectStatic();
         }
-        const push = execSync("git push heroku master").toString();
+        const push = execSync("git push heroku master -f").toString();
         console.log(push);
         const migrate = execSync("heroku run python manage.py migrate").toString();
         console.log(migrate);
