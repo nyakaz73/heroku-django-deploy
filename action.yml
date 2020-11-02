@@ -10,8 +10,8 @@ inputs:
     heroku_email_address:
         description: 'Heroku email address'
         required: true
-    want_to_login:
-        description: 'Want to login'
+    want_to_just_login:
+        description: 'Want to just login'
         required: false
     use_git:
         description: 'Deploy using git'
