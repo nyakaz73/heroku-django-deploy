@@ -34,6 +34,17 @@ const login = () => {
     }
 }
 
+const checkIfRepoIsShallow = () => {
+    // Check if Repo clone is shallow
+    const isShallow = execSync(
+        "git rev-parse --is-shallow-repository"
+    ).toString();
+
+    // If the Repo clone is shallow, make it unshallow
+    if (isShallow === "true\n") {
+        execSync("git fetch --prune --unshallow");
+    }
+}
 //Adding remote repo to heroku.
 const addRemote = ({ app_name }) => {
     try {
@@ -63,6 +74,8 @@ deployWithGit = () => {
         if (status) {
             execSync(`git commit -m "Initial commit"`).toString();
         }
+        //before push check if it is shallow then unshallow if it is
+        checkIfRepoIsShallow();
         const push = execSync("git push heroku master").toString();
         console.log(push);
         const migrate = execSync("heroku run python manage.py migrate").toString();
