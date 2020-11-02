@@ -68,7 +68,7 @@ deployWithGit = () => {
         console.log(error.message);
         console.log("Attempting to disable `collecstatic` cmd");
         try {
-            const disable = execSync("git config:set DISABLE_COLLECTSTATIC=1").toString();
+            const disable = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
             console.log(disable);
             const push = execSync("git push heroku master").toString();
             console.log(push);
