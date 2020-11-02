@@ -13,6 +13,14 @@ inputs:
     want_to_login:
         description: 'Want to login'
         required: false
+    use_git:
+        description: 'Deploy using git'
+        required: false
+        default: false
+    use_docker:
+        description: 'Deploy using docker Container registry or Build Manifest'
+        required: false
+        default: false
 outputs:
     status:
         description: "Status of the action"
