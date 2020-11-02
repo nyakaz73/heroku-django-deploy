@@ -83,12 +83,12 @@ pushAndRelease = ({ use_docker, use_git }) => {
     console.log(use_docker, use_git);
     try {
         console.log('Now in try');
-        if (use_docker) {
+        if (use_docker === true) {
             deployWithDocker();
-        } else if (use_git) {
+        } else if (use_git === true) {
             deployWithGit();
         }
-        else if (use_docker && use_git) {
+        else if (use_docker === true && use_git === true) {
             //Error only one deployment method at a time is allowed
             core.setFailed('Error : One deployment method at a time is allowed');
             console.log('Error : One deployment method at a time is allowed');
