@@ -9,7 +9,8 @@ let heroku = {
     'want_to_login': core.getInput('want_to_just_login'),
     'use_git': core.getInput('use_git'),
     'use_docker': core.getInput('use_docker'),
-    'disable_collect_static': core.getInput('disable_collect_static')
+    'disable_collect_static': core.getInput('disable_collect_static'),
+    'force_push': core.getInput('force_push'),
 }
 
 //Create Netrc cat file used during login with cli.
@@ -85,9 +86,16 @@ deployWithGit = () => {
         if (heroku.disable_collect_static) {
             disableCollectStatic();
         }
-        execSync("git pull heroku master")
-        const push = execSync("git push -f heroku master").toString();
-        console.log(push);
+        if (docker.force_push) {
+            execSync("git pull heroku master")
+            const push = execSync("git push -f heroku master").toString();
+            console.log(push);
+        } else {
+            const push = execSync("git push heroku master").toString();
+            console.log(push);
+        }
+
+
         const migrate = execSync("heroku run python manage.py migrate").toString();
         console.log(migrate);
     } catch (error) {

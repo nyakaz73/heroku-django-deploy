@@ -26,6 +26,10 @@ inputs:
         description: 'Disable collect static on pushing'
         required: false
         default: false
+    force_push:
+        description: 'Force push to heroku if there are conflicts or git fast forwards issues'
+        required: false
+        default: false
 outputs:
     status:
         description: "Status of the action"
