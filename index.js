@@ -48,6 +48,11 @@ checkIfRepoIsShallow = () => {
     }
 }
 
+gitForcePush = () => {
+    execSync("git pull heroku master")
+    const push = execSync("git push -f heroku master").toString();
+    console.log(push);
+}
 disableCollectStatic = () => {
     const disableC = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
     console.log(disableC);
@@ -87,15 +92,11 @@ deployWithGit = () => {
             disableCollectStatic();
         }
         if (docker.force_push) {
-            execSync("git pull heroku master")
-            const push = execSync("git push -f heroku master").toString();
-            console.log(push);
+            gitForcePush();
         } else {
             const push = execSync("git push heroku master").toString();
             console.log(push);
         }
-
-
         const migrate = execSync("heroku run python manage.py migrate").toString();
         console.log(migrate);
     } catch (error) {
