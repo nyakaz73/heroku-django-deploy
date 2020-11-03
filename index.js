@@ -9,6 +9,7 @@ let heroku = {
     'want_to_login': core.getInput('want_to_just_login'),
     'use_git': core.getInput('use_git'),
     'use_docker': core.getInput('use_docker'),
+    'use_build_manifest': core.getInput('use_build_manifest'),
     'disable_collect_static': core.getInput('disable_collect_static'),
     'force_push': core.getInput('force_push'),
 }

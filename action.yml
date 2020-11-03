@@ -19,7 +19,11 @@ inputs:
         required: false
         default: false
     use_docker:
-        description: 'Deploy using docker Container registry or Build Manifest'
+        description: 'Deploy using docker Container registry'
+        required: false
+        default: false
+    use_build_manifest:
+        description: 'Deploy using heroku Build Manifest'
         required: false
         default: false
     disable_collect_static:
