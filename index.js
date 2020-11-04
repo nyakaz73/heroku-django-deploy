@@ -54,6 +54,10 @@ gitForcePush = () => {
     const push = execSync("git push -f heroku master").toString();
     console.log(push);
 }
+herokuForcePush = ({ app_name }) => {
+    const push = execSync(`heroku container:push --force --app ${app_name} web`).toString();
+    console.log(push);
+}
 disableCollectStatic = () => {
     const disableC = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
     console.log(disableC);
@@ -71,9 +75,30 @@ addRemote = ({ app_name }) => {
     }
 }
 
+deployWithBuildManifest = ({ use_build_manifest }) => {
 
-deployWithDocker = () => {
-
+}
+deployWithDocker = ({ app_name, disable_collect_static, force_push }) => {
+    try {
+        console.log('Deploy using Container Registry ...');
+        if (force_push) {
+            herokuForcePush(heroku);
+        } else {
+            const push = execSync(`heroku container:push --app ${app_name} web`).toString();
+            console.log(push);
+        }
+        if (disable_collect_static) {
+            disableCollectStatic();
+        }
+        const migrate = execSync('heroku run python manage.py migrate').toString();
+        console.log(migrate);
+        console.log('Release ...');
+        const release = execSync(`heroku container:release --app ${app_name} web`).toString();
+        console.log(release);
+    } catch (error) {
+        console.log(error.message);
+        core.setFailed(error.message);
+    }
 }
 deployWithGit = () => {
     try {
@@ -105,14 +130,17 @@ deployWithGit = () => {
         core.setFailed(error.message);
     }
 }
-pushAndRelease = ({ use_docker, use_git }) => {
+pushAndRelease = ({ use_docker, use_git, use_build_manifest }) => {
     try {
-        if (use_docker === true) {
-            deployWithDocker();
-        } else if (use_git === true) {
+        if (use_docker && !(use_git && use_build_manifest)) {
+            deployWithDocker(heroku);
+        } else if (use_git && !(use_docker && use_build_manifest)) {
             deployWithGit();
         }
-        else if (use_docker === true && use_git === true) {
+        else if (use_build_manifest && !(use_git && use_docker)) {
+            deployWithBuildManifest(heroku);
+        }
+        else if ((use_docker && use_git) || (use_build_manifest && use_git) || (use_build_manifest && use_docker && use_git)) {
             //Error only one deployment method at a time is allowed
             core.setFailed('Error : One deployment method at a time is allowed');
             console.log('Error : One deployment method at a time is allowed');
