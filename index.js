@@ -140,7 +140,7 @@ pushAndRelease = ({ use_docker, use_git, use_build_manifest }) => {
         else if (use_build_manifest && !(use_git && use_docker)) {
             deployWithBuildManifest(heroku);
         }
-        else if ((use_docker && use_git) || (use_build_manifest && use_git) || (use_build_manifest && use_docker && use_git)) {
+        else if ((use_docker && use_git) === true || (use_build_manifest && use_git) == true || (use_build_manifest && use_docker && use_git) === true) {
             //Error only one deployment method at a time is allowed
             core.setFailed('Error : One deployment method at a time is allowed');
             console.log('Error : One deployment method at a time is allowed');
