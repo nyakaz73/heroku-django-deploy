@@ -117,7 +117,7 @@ deployWithGit = () => {
         if (heroku.disable_collect_static) {
             disableCollectStatic();
         }
-        if (docker.force_push) {
+        if (heroku.force_push) {
             gitForcePush();
         } else {
             const push = execSync("git push heroku master").toString();
