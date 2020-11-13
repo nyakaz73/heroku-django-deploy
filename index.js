@@ -58,6 +58,10 @@ herokuForcePush = ({ app_name }) => {
     const push = execSync(`heroku container:push --force --app ${app_name} web`).toString();
     console.log(push);
 }
+manifestForcePush = () => {
+    const push = execSync('git push -f heroku master').toString();
+    console.log(push);
+}
 disableCollectStatic = () => {
     const disableC = execSync("heroku config:set DISABLE_COLLECTSTATIC=1").toString();
     console.log(disableC);
@@ -97,8 +101,13 @@ deployWithBuildManifest = () => {
 
         //before push check if it is shallow then unshallow if it is
         checkIfRepoIsShallow();
-        const push = execSync('git push heroku master');
-        console.log(push);
+        if (heroku.force_push === 'true') {
+            manifestForcePush();
+        } else {
+            const push = execSync('git push heroku master');
+            console.log(push);
+        }
+
 
     } catch (error) {
         console.log(error.message);
