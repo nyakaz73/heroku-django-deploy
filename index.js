@@ -80,14 +80,16 @@ deployWithBuildManifest = ({ use_build_manifest }) => {
 }
 deployWithDocker = ({ app_name, disable_collect_static, force_push }) => {
     try {
+        console.log('******************************');
         console.log('Deploy using Container Registry ...');
-        if (force_push) {
+        console.log('******************************');
+        if (force_push === true) {
             herokuForcePush(heroku);
         } else {
             const push = execSync(`heroku container:push --app ${app_name} web`).toString();
             console.log(push);
         }
-        if (disable_collect_static) {
+        if (disable_collect_static === true) {
             disableCollectStatic();
         }
         const migrate = execSync('heroku run python manage.py migrate').toString();
@@ -114,10 +116,10 @@ deployWithGit = () => {
         }
         //before push check if it is shallow then unshallow if it is
         checkIfRepoIsShallow();
-        if (heroku.disable_collect_static) {
+        if (heroku.disable_collect_static === true) {
             disableCollectStatic();
         }
-        if (heroku.force_push) {
+        if (heroku.force_push === true) {
             gitForcePush();
         } else {
             const push = execSync("git push heroku master").toString();
@@ -136,15 +138,15 @@ pushAndRelease = ({ use_docker, use_git, use_build_manifest }) => {
         console.log(use_docker, use_build_manifest, use_git);
         console.log('******************************');
 
-        if (use_docker) {
+        if (use_docker === true) {
             deployWithDocker(heroku);
-        } else if (use_git) {
+        } else if (use_git === true) {
             deployWithGit();
         }
-        else if (use_build_manifest) {
+        else if (use_build_manifest === true) {
             deployWithBuildManifest(heroku);
         }
-        else if ((use_docker && use_git) === true || (use_build_manifest && use_git) == true || (use_build_manifest && use_docker && use_git) === true) {
+        else if ((use_docker && use_git) === true || (use_build_manifest && use_git) === true || (use_build_manifest && use_docker && use_git) === true) {
             //Error only one deployment method at a time is allowed
             core.setFailed('Error : One deployment method at a time is allowed');
             console.log('Error : One deployment method at a time is allowed');
