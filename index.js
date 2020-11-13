@@ -136,12 +136,12 @@ pushAndRelease = ({ use_docker, use_git, use_build_manifest }) => {
         console.log(use_docker, use_build_manifest, use_git);
         console.log('******************************');
 
-        if (use_docker && !(use_git && use_build_manifest)) {
+        if (use_docker) {
             deployWithDocker(heroku);
-        } else if (use_git && !(use_docker && use_build_manifest)) {
+        } else if (use_git) {
             deployWithGit();
         }
-        else if (use_build_manifest && !(use_git && use_docker)) {
+        else if (use_build_manifest) {
             deployWithBuildManifest(heroku);
         }
         else if ((use_docker && use_git) === true || (use_build_manifest && use_git) == true || (use_build_manifest && use_docker && use_git) === true) {
