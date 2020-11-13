@@ -83,6 +83,8 @@ deployWithDocker = ({ app_name, disable_collect_static, force_push }) => {
         console.log('******************************');
         console.log('Deploy using Container Registry ...');
         console.log('******************************');
+        const login = execSync('heroku container:login').toString();
+        console.log(login);
         if (force_push === 'true') {
             herokuForcePush(heroku);
         } else {
