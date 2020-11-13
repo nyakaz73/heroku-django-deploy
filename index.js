@@ -95,6 +95,8 @@ deployWithBuildManifest = () => {
         const stack = execSync('heroku stack:set container').toString();
         console.log(stack);
 
+        //before push check if it is shallow then unshallow if it is
+        checkIfRepoIsShallow();
         const push = execSync('git push heroku master');
         console.log(push);
 
