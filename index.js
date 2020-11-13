@@ -75,7 +75,26 @@ addRemote = ({ app_name }) => {
     }
 }
 
-deployWithBuildManifest = ({ use_build_manifest }) => {
+deployWithBuildManifest = () => {
+    try {
+        console.log('******************************');
+        console.log('Deploy using Heroku Build Manifest...');
+        console.log('******************************');
+        const gadd = execSync('git add heroku.yml').toString();
+        console.log(gadd);
+        const commit = execSync(`git commit -m "Add heroku.yml"`).toString();
+        console.log(commit);
+
+        const stack = execSync('heroku stack:set container').toString();
+        console.log(stack);
+
+        const push = execSync('git push heroku master');
+        console.log(push);
+
+    } catch (error) {
+        console.log(error.message);
+        core.setFailed(error.message);
+    }
 
 }
 deployWithDocker = ({ app_name, disable_collect_static, force_push }) => {
@@ -148,7 +167,7 @@ pushAndRelease = ({ use_docker, use_git, use_build_manifest }) => {
             deployWithGit();
         }
         else if (use_build_manifest === 'true') {
-            deployWithBuildManifest(heroku);
+            deployWithBuildManifest();
         }
         else if ((use_docker && use_git) === 'true' || (use_build_manifest && use_git) === 'true' || (use_build_manifest && use_docker && use_git) === 'true') {
             //Error only one deployment method at a time is allowed
