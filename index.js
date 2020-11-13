@@ -84,8 +84,13 @@ deployWithBuildManifest = () => {
         execSync(`git config user.email "${heroku.email_address}"`);
         const gadd = execSync('git add heroku.yml').toString();
         console.log(gadd);
-        const commit = execSync(`git commit -m "Add heroku.yml"`).toString();
-        console.log(commit);
+        const status = execSync("git status --porcelain").toString().trim(); //checking if there is a modified file
+        console.log(status);
+        if (status) {
+            const commit = execSync(`git commit -m "Add heroku.yml"`).toString();
+            console.log(commit);
+        }
+
 
         const stack = execSync('heroku stack:set container').toString();
         console.log(stack);
