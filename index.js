@@ -137,7 +137,7 @@ deployWithGit = () => {
 pushAndRelease = ({ use_docker, use_git, use_build_manifest }) => {
     try {
         console.log('******************************');
-        console.log(use_docker, use_build_manifest, use_git);
+        console.log(type(use_docker), use_build_manifest, use_git);
         console.log('******************************');
 
         if (use_docker === true) {
