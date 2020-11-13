@@ -104,7 +104,9 @@ deployWithDocker = ({ app_name, disable_collect_static, force_push }) => {
 }
 deployWithGit = () => {
     try {
+        console.log('******************************');
         console.log('Deploying with git...');
+        console.log('******************************');
         execSync(`git config user.name "Heroku-Django-Deploy"`);
         execSync(`git config user.email "${heroku.email_address}"`);
         const gadd = execSync("git add -A").toString();
