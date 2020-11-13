@@ -80,6 +80,8 @@ deployWithBuildManifest = () => {
         console.log('******************************');
         console.log('Deploy using Heroku Build Manifest...');
         console.log('******************************');
+        execSync(`git config user.name "Heroku-Django-Deploy"`);
+        execSync(`git config user.email "${heroku.email_address}"`);
         const gadd = execSync('git add heroku.yml').toString();
         console.log(gadd);
         const commit = execSync(`git commit -m "Add heroku.yml"`).toString();
