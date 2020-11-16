@@ -10,7 +10,7 @@ jobs:
       runs-on: ubuntu-latest
       env:
         working-directory: ./tests/djangoherokuapp
-      name: A job to deploy django app to heroku using git
+      name: Git Deploy job- A job to deploy django app to heroku using git
       defaults:
         run:
           working-directory: ${{ env.working-directory }}
@@ -33,7 +33,7 @@ jobs:
       runs-on: ubuntu-latest
       env:
         working-directory: ./tests/djangoherokuapp
-      name: A job to deploy django app to heroku with container registry
+      name: Container registry deploy- A job to deplo django app to heroku with container registry
       defaults:
         run:
           working-directory: ${{ env.working-directory }}
@@ -58,7 +58,7 @@ jobs:
       runs-on: ubuntu-latest
       env:
         working-directory: ./tests/djangoherokuapp
-      name: A job to deploy django app to heroku Build Manifest
+      name: Build Manifest deploy-A job to deploy django app to heroku Build Manifest
       defaults:
         run:
           working-directory: ${{ env.working-directory }}
