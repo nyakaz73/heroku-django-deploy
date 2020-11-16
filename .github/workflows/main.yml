@@ -18,7 +18,6 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-    
           uses: nyakaz73/heroku-django-deploy@v0.36 #Uses an action in the root directory
           id: deploy 
           with: 
@@ -26,7 +25,6 @@ jobs:
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
           
-            
         #Use the output  from the hello step
         - name: Get the output status
           run: echo "${{ steps.deploy.outputs.status }}"
@@ -36,12 +34,14 @@ jobs:
       env:
         working-directory: ./tests/djangoherokuapp
       name: A job to deploy django app to heroku with container registry
+      defaults:
+        run:
+          working-directory: ${{ env.working-directory }}
       steps:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
           uses: nyakaz73/heroku-django-deploy@v0.47 #Uses an action in the root directory
-          working-directory: ${{ env.working-directory }}
           id: deploy 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME_DOCKER }}
@@ -59,12 +59,14 @@ jobs:
       env:
         working-directory: ./tests/djangoherokuapp
       name: A job to deploy django app to heroku Build Manifest
+      defaults:
+        run:
+          working-directory: ${{ env.working-directory }}
       steps:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
           uses: nyakaz73/heroku-django-deploy@v0.51 #Uses an action in the root directory
-          working-directory: ${{ env.working-directory }}
           id: deploy 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME_MANIFEST }}
