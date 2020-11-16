@@ -16,8 +16,8 @@ jobs:
       name: Git Deploy job- A job to deploy django app to heroku using git
       steps:
         - name: Checkout
-          working-directory: ./tests/djangoherokuapp
           uses: actions/checkout@v2
+          working-directory: ./tests/djangoherokuapp
         - name: Deploy django to heroku
           working-directory: ./tests/djangoherokuapp
           uses: nyakaz73/heroku-django-deploy@v0.54 #Uses an action in the root directory
