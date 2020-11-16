@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { execSync, exec } = require('child_process')
+const { execSync } = require('child_process')
 
 //Variables.
 let heroku = {
