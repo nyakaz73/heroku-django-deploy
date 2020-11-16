@@ -1,22 +1,75 @@
+name: Deploy Tests
+
 on:
-    push:
-      branches: [ master ]
-    pull_request:
-      branches: [ master ]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 jobs:
-    heroku_login_job:
-        runs-on: ubuntu-latest
-        name: A job to check if user is logged in
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v2
-          - name: Check user if logged in action step
-            uses: ./ #Uses an action in the root directory
-            id: login 
-            with: 
-              heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
-              heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-              heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
-          #Use the output  from the hello step
-          - name: Get the output status
-            run: echo "${{ steps.login.outputs.status }}"
+  heroku_git_deploy_job:
+      runs-on: ubuntu-latest
+      env:
+        working-directory: ./tests/djangoherokuapp
+      name: A job to deploy django app to heroku using git
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Deploy django to heroku
+          uses: nyakaz73/heroku-django-deploy@v0.36 #Uses an action in the root directory
+          working-directory: ${{ env.working-directory }}
+          id: deploy 
+          with: 
+            heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
+            
+        #Use the output  from the hello step
+        - name: Get the output status
+          run: echo "${{ steps.deploy.outputs.status }}"
+  
+  heroku_docker_deploy_job:
+      runs-on: ubuntu-latest
+      env:
+        working-directory: ./tests/djangoherokuapp
+      name: A job to deploy django app to heroku with container registry
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Deploy django to heroku
+          uses: nyakaz73/heroku-django-deploy@v0.47 #Uses an action in the root directory
+          working-directory: ${{ env.working-directory }}
+          id: deploy 
+          with: 
+            heroku_app_name : ${{ secrets.HEROKU_APP_NAME_DOCKER }}
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
+            use_docker: true
+            
+        #Use the output  from the hello step
+        - name: Get the output status
+          run: echo "${{ steps.deploy.outputs.status }}"
+
+
+  heroku_manifest_deploy_job:
+      runs-on: ubuntu-latest
+      env:
+        working-directory: ./tests/djangoherokuapp
+      name: A job to deploy django app to heroku Build Manifest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Deploy django to heroku
+          uses: nyakaz73/heroku-django-deploy@v0.51 #Uses an action in the root directory
+          working-directory: ${{ env.working-directory }}
+          id: deploy 
+          with: 
+            heroku_app_name : ${{ secrets.HEROKU_APP_NAME_MANIFEST }}
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
+            use_build_manifest: true
+            
+        #Use the output  from the hello step
+        - name: Get the output status
+          run: echo "${{ steps.deploy.outputs.status }}"
+  
+          
