@@ -27,6 +27,8 @@ jobs:
         #Use the output  from the hello step
         - name: Get the output status
           run: echo "${{ steps.deploy.outputs.status }}"
+        - name: Getting the files in directory
+          run: pwd
   
   heroku_docker_deploy_job:
       runs-on: ubuntu-latest
