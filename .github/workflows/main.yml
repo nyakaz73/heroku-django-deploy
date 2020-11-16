@@ -12,7 +12,7 @@ jobs:
         working-directory: ./tests/djangoherokuapp
       name: Git Deploy job- A job to deploy django app to heroku using git
       defaults:
-        run:
+        run: ls
           working-directory: ${{ env.working-directory }}
       steps:
         - name: Checkout
@@ -35,7 +35,7 @@ jobs:
         working-directory: ./tests/djangoherokuapp
       name: Container registry deploy- A job to deplo django app to heroku with container registry
       defaults:
-        run:
+        run: ls
           working-directory: ${{ env.working-directory }}
       steps:
         - name: Checkout
@@ -60,7 +60,7 @@ jobs:
         working-directory: ./tests/djangoherokuapp
       name: Build Manifest deploy-A job to deploy django app to heroku Build Manifest
       defaults:
-        run:
+        run: ls
           working-directory: ${{ env.working-directory }}
       steps:
         - name: Checkout
