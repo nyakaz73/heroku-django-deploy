@@ -24,6 +24,7 @@ jobs:
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             working-directory: ./tests/djangoherokuapp
+            force_push: true
           
         #Use the output  from the hello step
         - name: Get the output status
@@ -67,6 +68,7 @@ jobs:
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             use_build_manifest: true
             working-directory: ./tests/djangoherokuapp
+            force_push: true
             
         #Use the output  from the hello step
         - name: Get the output status
