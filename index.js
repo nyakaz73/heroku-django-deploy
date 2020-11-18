@@ -54,7 +54,7 @@ checkIfRepoIsShallow = () => {
 }
 
 gitForcePush = () => {
-    execSync("git pull heroku master", execOptions)
+    //execSync("git pull heroku master", execOptions)
     const push = execSync("git push -f heroku master", execOptions).toString();
     console.log(push);
 }
