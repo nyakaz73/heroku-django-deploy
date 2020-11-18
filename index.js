@@ -55,7 +55,7 @@ checkIfRepoIsShallow = () => {
 
 gitForcePush = () => {
     //execSync("git pull heroku master", execOptions)
-    const push = execSync("git push -f heroku master", execOptions).toString();
+    const push = execSync("git push --force heroku master", execOptions).toString();
     console.log(push);
 }
 herokuForcePush = ({ app_name }) => {
@@ -63,7 +63,7 @@ herokuForcePush = ({ app_name }) => {
     console.log(push);
 }
 manifestForcePush = () => {
-    const push = execSync('git push -f heroku master', execOptions).toString();
+    const push = execSync('git push --force heroku master', execOptions).toString();
     console.log(push);
 }
 disableCollectStatic = () => {
