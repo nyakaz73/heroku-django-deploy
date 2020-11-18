@@ -90,7 +90,7 @@ deployWithBuildManifest = () => {
         console.log('******************************');
         execSync(`git config user.name "Heroku-Django-Deploy"`, execOptions);
         execSync(`git config user.email "${heroku.email_address}"`, execOptions);
-        const gadd = execSync('git add heroku.yml', execOptions).toString();
+        const gadd = execSync('git add -A', execOptions).toString();
         console.log(gadd);
         const status = execSync("git status --porcelain", execOptions).toString().trim(); //checking if there is a modified file
         console.log(status);
