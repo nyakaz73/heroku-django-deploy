@@ -34,6 +34,9 @@ inputs:
         description: 'Force push to heroku if there are conflicts or git fast forwards issues'
         required: false
         default: false
+    working-directory:
+        description: 'The directory for the commands to execute in'
+        default: './'
 outputs:
     status:
         description: "Status of the action"

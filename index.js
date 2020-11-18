@@ -12,8 +12,12 @@ let heroku = {
     'use_build_manifest': core.getInput('use_build_manifest'),
     'disable_collect_static': core.getInput('disable_collect_static'),
     'force_push': core.getInput('force_push'),
+    'workingDir': core.getInput('working-directory'),
 }
 
+let execOptions = {
+    cwd: workingDir,
+}
 //Create Netrc cat file used during login with cli.
 const createNetrcFileForLogin = ({ email_address, api_key }) => {
     return execSync(`cat >~/.netrc <<EOF
@@ -41,25 +45,25 @@ checkIfRepoIsShallow = () => {
     // Check if Repo clone is shallow
     const isShallow = execSync(
         "git rev-parse --is-shallow-repository"
-    ).toString();
+        , execOptions).toString();
 
     // If the Repo clone is shallow, make it unshallow
     if (isShallow === "true\n") {
-        execSync("git fetch --prune --unshallow");
+        execSync("git fetch --prune --unshallow", execOptions);
     }
 }
 
 gitForcePush = () => {
-    execSync("git pull heroku master")
-    const push = execSync("git push -f heroku master").toString();
+    execSync("git pull heroku master", execOptions)
+    const push = execSync("git push -f heroku master", execOptions).toString();
     console.log(push);
 }
 herokuForcePush = ({ app_name }) => {
-    const push = execSync(`heroku container:push --force --app ${app_name} web`).toString();
+    const push = execSync(`heroku container:push --force --app ${app_name} web`, execOptions).toString();
     console.log(push);
 }
 manifestForcePush = () => {
-    const push = execSync('git push -f heroku master').toString();
+    const push = execSync('git push -f heroku master', execOptions).toString();
     console.log(push);
 }
 disableCollectStatic = () => {
@@ -69,9 +73,9 @@ disableCollectStatic = () => {
 //Adding remote repo to heroku.
 addRemote = ({ app_name }) => {
     try {
-        const gitInit = execSync('git init').toString();
+        const gitInit = execSync('git init', execOptions).toString();
         console.log(gitInit);
-        const remote = execSync(`heroku git:remote -a ${app_name}`).toString();
+        const remote = execSync(`heroku git:remote -a ${app_name}`, execOptions).toString();
         console.log(remote);
     } catch (error) {
         core.setFailed(error.message);
@@ -84,19 +88,19 @@ deployWithBuildManifest = () => {
         console.log('******************************');
         console.log('Deploy using Heroku Build Manifest...');
         console.log('******************************');
-        execSync(`git config user.name "Heroku-Django-Deploy"`);
-        execSync(`git config user.email "${heroku.email_address}"`);
-        const gadd = execSync('git add heroku.yml').toString();
+        execSync(`git config user.name "Heroku-Django-Deploy"`, execOptions);
+        execSync(`git config user.email "${heroku.email_address}"`, execOptions);
+        const gadd = execSync('git add heroku.yml', execOptions).toString();
         console.log(gadd);
-        const status = execSync("git status --porcelain").toString().trim(); //checking if there is a modified file
+        const status = execSync("git status --porcelain", execOptions).toString().trim(); //checking if there is a modified file
         console.log(status);
         if (status) {
-            const commit = execSync(`git commit -m "Add heroku.yml"`).toString();
+            const commit = execSync(`git commit -m "Add heroku.yml"`, execOptions).toString();
             console.log(commit);
         }
 
 
-        const stack = execSync('heroku stack:set container').toString();
+        const stack = execSync('heroku stack:set container', execOptions).toString();
         console.log(stack);
 
         //before push check if it is shallow then unshallow if it is
@@ -104,7 +108,7 @@ deployWithBuildManifest = () => {
         if (heroku.force_push === 'true') {
             manifestForcePush();
         } else {
-            const push = execSync('git push heroku master');
+            const push = execSync('git push heroku master', execOptions);
             console.log(push);
         }
 
@@ -120,21 +124,21 @@ deployWithDocker = ({ app_name, disable_collect_static, force_push }) => {
         console.log('******************************');
         console.log('Deploy using Container Registry ...');
         console.log('******************************');
-        const login = execSync('heroku container:login').toString();
+        const login = execSync('heroku container:login', execOptions).toString();
         console.log(login);
         if (force_push === 'true') {
             herokuForcePush(heroku);
         } else {
-            const push = execSync(`heroku container:push --app ${app_name} web`).toString();
+            const push = execSync(`heroku container:push --app ${app_name} web`, execOptions).toString();
             console.log(push);
         }
         if (disable_collect_static === 'true') {
             disableCollectStatic();
         }
-        const migrate = execSync('heroku run python manage.py migrate').toString();
+        const migrate = execSync('heroku run python manage.py migrate', execOptions).toString();
         console.log(migrate);
         console.log('Release ...');
-        const release = execSync(`heroku container:release --app ${app_name} web`).toString();
+        const release = execSync(`heroku container:release --app ${app_name} web`, execOptions).toString();
         console.log(release);
     } catch (error) {
         console.log(error.message);
@@ -146,14 +150,14 @@ deployWithGit = () => {
         console.log('******************************');
         console.log('Deploying with git...');
         console.log('******************************');
-        execSync(`git config user.name "Heroku-Django-Deploy"`);
-        execSync(`git config user.email "${heroku.email_address}"`);
-        const gadd = execSync("git add -A").toString();
+        execSync(`git config user.name "Heroku-Django-Deploy"`, execOptions);
+        execSync(`git config user.email "${heroku.email_address}"`, execOptions);
+        const gadd = execSync("git add -A", execOptions).toString();
         console.log(gadd);
-        const status = execSync("git status --porcelain").toString().trim(); //checking if there is a modified file
+        const status = execSync("git status --porcelain", execOptions).toString().trim(); //checking if there is a modified file
         console.log(status);
         if (status) {
-            execSync(`git commit -m "Initial commit"`).toString();
+            execSync(`git commit -m "Initial commit"`, execOptions).toString();
         }
         //before push check if it is shallow then unshallow if it is
         checkIfRepoIsShallow();
@@ -163,10 +167,10 @@ deployWithGit = () => {
         if (heroku.force_push === 'true') {
             gitForcePush();
         } else {
-            const push = execSync("git push heroku master").toString();
+            const push = execSync("git push heroku master", execOptions).toString();
             console.log(push);
         }
-        const migrate = execSync("heroku run python manage.py migrate").toString();
+        const migrate = execSync("heroku run python manage.py migrate", execOptions).toString();
         console.log(migrate);
     } catch (error) {
         console.log(error.message);
