@@ -16,7 +16,7 @@ let heroku = {
 }
 
 let execOptions = {
-    cwd: workingDir,
+    cwd: heroku.workingDir,
 }
 //Create Netrc cat file used during login with cli.
 const createNetrcFileForLogin = ({ email_address, api_key }) => {
