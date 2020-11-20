@@ -167,7 +167,7 @@ deployWithGit = () => {
         if (heroku.force_push === 'true') {
             gitForcePush();
         } else {
-            const pull = execSync("git push heroku master", execOptions).toString();
+            const pull = execSync("git pull heroku master", execOptions).toString();
             console.log(pull);
             const push = execSync("git push heroku master", execOptions).toString();
             console.log(push);
