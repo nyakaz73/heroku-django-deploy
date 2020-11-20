@@ -25,6 +25,7 @@ jobs:
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             working-directory: ./tests/djangoherokuapp
             use_git: true
+            force_push: true
           
         #Use the output  from the hello step
         - name: Get the output status
