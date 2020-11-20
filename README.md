@@ -94,7 +94,7 @@ The action has multiple here is a list of options you can use  under with with f
 |  heroku_email_address       |  true     | This is your heroku email address you use when login in, and will be used for authentication | heroku_email_address: myherokuemail@gmail.com |
 |  use_git                    |  false    | Deployment method if you want to use git | use_git: true |
 |  use_docker                 |  false    | Deployment method if you want to use docker container registry | use_docker:  true |
-|  use_build_manifest         |  false    | Deployment method if you want to use docker build manifest | use_build_manifest: true |
+|  use_build_manifest         |  false    | Deployment method if you want to use docker heroku build manifest | use_build_manifest: true |
 |  disable_collect_static     |  false    | Used when you want to disable Django COLLECTSTATIC cmd | disable_collect_static: true |
 |  force_push                 |  false    | Used when you want to force push your app with git or docker,and or container registry | force_push: true |
 |  working-directory          |  false    | Used when you want to specify a different working directory for your root app directory from default ./ | working-directory: ./newfolder_in_root/djangoherokuapp |
