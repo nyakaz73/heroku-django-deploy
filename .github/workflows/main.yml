@@ -34,6 +34,7 @@ jobs:
   
   heroku_docker_deploy_job:
       runs-on: ubuntu-latest
+      needs: heroku_git_deploy_job
       name: Container registry deploy- A job to deplo django app to heroku with container registry
       steps:
         - name: Checkout
@@ -55,6 +56,7 @@ jobs:
 
   heroku_manifest_deploy_job:
       runs-on: ubuntu-latest
+      needs: heroku_docker_deploy_job
       name: Build Manifest deploy-A job to deploy django app to heroku Build Manifest
       steps:
         - name: Checkout
