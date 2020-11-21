@@ -12,7 +12,7 @@ heroku-django deploy uses three methods to deploy your Django app to heroku ie
 Unless you are using git make sure you have a **Procfile** or a **Dockerfile**  or a **heroku.yml** in your project root directory together with the **requirements.txt** file.
 
 ### 1. Deploy with git
-By default if you dont specify the deployment option it will use git see example below.
+By default if you dont specify the deployment option it will use git or else altenatively specify the **use_git: true** option in the with tag.  see example below.
 
 ```yml
 on:
@@ -28,11 +28,12 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.59 #Uses an action in the root directory
+          uses: nyakaz73/heroku-django-deploy@v0.68 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
+            use_git: true
 ```
 ### 2. Deploy with docker container registry
 Make sure you specify the deployment option ie **use_docker** option.
@@ -51,7 +52,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.59 #Uses an action in the root directory
+          uses: nyakaz73/heroku-django-deploy@v0.68 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -77,7 +78,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.59 #Uses an action in the root directory
+          uses: nyakaz73/heroku-django-deploy@v0.68
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
