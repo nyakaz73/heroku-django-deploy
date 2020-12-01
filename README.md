@@ -1,5 +1,7 @@
 # heroku-django-deploy
 A simple github action that automatically deploys Django app to heroku
+The github action can be found on github market place [here](https://github.com/marketplace/actions/heroku-django-deploy).
+The repo can be found [here](https://github.com/nyakaz73/heroku-django-deploy). I encourage and welcome all pull requests.
 
 ### Show some :heart: and :star: the repo to support the project
 
