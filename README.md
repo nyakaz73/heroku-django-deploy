@@ -100,6 +100,13 @@ The action has multiple here is a list of options you can use  under with with f
 |  force_push                 |  false    | Used when you want to force push your app with git or docker,and or container registry | force_push: true |
 |  working-directory          |  false    | Used when you want to specify a different working directory for your root app directory from default ./ | working-directory: ./newfolder_in_root/djangoherokuapp |
 
+## Example
+A full working example can be found under tests in the github repo [here](https://github.com/nyakaz73/heroku-django-deploy/tree/master/tests/djangoherokuapp).
+
+## Pull Requests and Contributions
+I Welcome and i encourage all Pull Requests. Lets make the repo big :)
+Github repo [here](https://github.com/nyakaz73/heroku-django-deploy)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/nyakaz73/heroku-django-deploy/blob/master/LICENSE) file for details
