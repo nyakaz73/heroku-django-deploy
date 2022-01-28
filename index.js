@@ -55,13 +55,10 @@ checkIfRepoIsShallow = () => {
 };
 
 gitForcePush = () => {
-  //execSync("git pull heroku master", execOptions)
+  //execSync("git pull heroku main", execOptions)
   //const pull = execSync("git pull --ff-only", execOptions).toString();
   //console.log(pull);
-  const push = execSync(
-    "git push --force heroku master",
-    execOptions
-  ).toString();
+  const push = execSync("git push --force heroku main", execOptions).toString();
   console.log(push);
 };
 herokuForcePush = ({ app_name }) => {
@@ -72,10 +69,7 @@ herokuForcePush = ({ app_name }) => {
   console.log(push);
 };
 manifestForcePush = () => {
-  const push = execSync(
-    "git push --force heroku master",
-    execOptions
-  ).toString();
+  const push = execSync("git push --force heroku main", execOptions).toString();
   console.log(push);
 };
 disableCollectStatic = () => {
@@ -132,7 +126,7 @@ deployWithBuildManifest = () => {
     if (heroku.force_push === "true") {
       manifestForcePush();
     } else {
-      const push = execSync("git push heroku master", execOptions);
+      const push = execSync("git push heroku main", execOptions);
       console.log(push);
     }
   } catch (error) {
@@ -199,7 +193,7 @@ deployWithGit = () => {
     if (heroku.force_push === "true") {
       gitForcePush();
     } else {
-      const push = execSync("git push heroku master", execOptions).toString();
+      const push = execSync("git push heroku main", execOptions).toString();
       console.log(push);
     }
     const migrate = execSync(
