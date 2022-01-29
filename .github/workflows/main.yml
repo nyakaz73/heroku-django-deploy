@@ -26,6 +26,7 @@ jobs:
             working-directory: ./tests/djangoherokuapp
             use_git: true
             force_push: true
+            git_branch: master
           
         #Use the output  from the hello step
         - name: Get the output status
@@ -49,6 +50,7 @@ jobs:
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             use_docker: true
             working-directory: ./tests/djangoherokuapp
+            git_branch: master
             
         #Use the output  from the hello step
         - name: Get the output status
@@ -72,6 +74,7 @@ jobs:
             use_build_manifest: true
             working-directory: ./tests/djangoherokuapp
             force_push: true
+            git_branch: master
             
         #Use the output  from the hello step
         - name: Get the output status
