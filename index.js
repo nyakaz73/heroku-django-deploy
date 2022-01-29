@@ -56,7 +56,8 @@ checkIfRepoIsShallow = () => {
 
 gitForcePush = () => {
   //execSync("git pull heroku main", execOptions)
-  const pull = execSync("git pull --ff-only", execOptions).toString();
+  const pull = execSync("git pull heroku main", execOptions).toString();
+  //const pull = execSync("git pull --ff-only", execOptions).toString();
   console.log(pull);
   const push = execSync("git push --force heroku main", execOptions).toString();
   console.log(push);
@@ -83,8 +84,6 @@ addRemote = ({ app_name }) => {
   try {
     const gitInit = execSync("git init", execOptions).toString();
     console.log(gitInit);
-    console.log(`****the app name is ${app_name}`);
-
     const remote = execSync(
       `heroku git:remote -a ${app_name}`,
       execOptions
