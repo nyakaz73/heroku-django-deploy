@@ -75,7 +75,7 @@ herokuForcePush = ({ app_name }) => {
 };
 manifestForcePush = () => {
   const push = execSync(
-    `git push --force heroku ${git_branch}`,
+    `git push --force heroku ${heroku.git_branch}`,
     execOptions
   ).toString();
   console.log(push);
