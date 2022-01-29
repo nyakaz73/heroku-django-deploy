@@ -37,6 +37,9 @@ inputs:
     working-directory:
         description: 'The directory for the commands to execute in'
         default: './'
+    git_branch:
+        description: 'This is the default git branch you want to push from eg main or master'
+        required: true
 outputs:
     status:
         description: "Status of the action"
