@@ -13,6 +13,9 @@ heroku-django deploy uses three methods to deploy your Django app to heroku ie
 
 Unless you are using git make sure you have a **Procfile** or a **Dockerfile**  or a **heroku.yml** in your project root directory together with the **requirements.txt** file.
 
+## *****NB BRANCH CHANGE UPDATE master to main*******
+Git and Herouku change their main branches from **master** to **main** ,so in this package  have added mandatory **git_branch**  tag that lets you specify your git default branch you want to push from.
+
 ### 1. Deploy with git
 By default if you dont specify the deployment option it will use git or else altenatively specify the **use_git: true** option in the with tag.  see example below.
 
@@ -36,6 +39,7 @@ jobs:
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             use_git: true
+            git_branch: master
 ```
 ### 2. Deploy with docker container registry
 Make sure you specify the deployment option ie **use_docker** option.
@@ -60,6 +64,7 @@ jobs:
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             use_docker: true
+            git_branch: master
 ```
 
 ### 3. Deploy with docker build manifest
@@ -86,6 +91,7 @@ jobs:
             heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
             heroku_email_address: 'tafadzwalnyamukapa@gmail.com'
             use_build_manifest: true
+            git_branch: master
 ```
 
 ## Options
@@ -101,6 +107,7 @@ The action has multiple here is a list of options you can use  under with with f
 |  disable_collect_static     |  false    | Used when you want to disable Django COLLECTSTATIC cmd | disable_collect_static: true |
 |  force_push                 |  false    | Used when you want to force push your app with git or docker,and or container registry | force_push: true |
 |  working-directory          |  false    | Used when you want to specify a different working directory for your root app directory from default ./ | working-directory: ./newfolder_in_root/djangoherokuapp |
+|  git_branch                 |  true     | This is the default git branch you want to push from eg main or master | git_branch: main |
 
 ## Example
 A full working example can be found under tests in the github repo [here](https://github.com/nyakaz73/heroku-django-deploy/tree/master/tests/djangoherokuapp).
