@@ -84,6 +84,7 @@ addRemote = ({ app_name }) => {
     const gitInit = execSync("git init", execOptions).toString();
     console.log(gitInit);
     console.log(`****the app name is ${app_name}`);
+
     const remote = execSync(
       `heroku git:remote -a ${app_name}`,
       execOptions
