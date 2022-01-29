@@ -17,7 +17,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.70 #Uses an action in the root directory
+          uses: nyakaz73/heroku-django-deploy@v0.71 #Uses an action in the root directory
           id: deploy 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME_GIT }}
@@ -41,7 +41,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.70 #Uses an action in the root directory
+          uses: nyakaz73/heroku-django-deploy@v0.71 #Uses an action in the root directory
           id: deploy 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME_DOCKER }}
@@ -63,7 +63,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
         - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.70 #Uses an action in the root directory
+          uses: nyakaz73/heroku-django-deploy@v0.71 #Uses an action in the root directory
           id: deploy 
           with: 
             heroku_app_name : ${{ secrets.HEROKU_APP_NAME_MANIFEST }}
