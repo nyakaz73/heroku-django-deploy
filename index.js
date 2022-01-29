@@ -56,8 +56,8 @@ checkIfRepoIsShallow = () => {
 
 gitForcePush = () => {
   //execSync("git pull heroku main", execOptions)
-  //const pull = execSync("git pull --ff-only", execOptions).toString();
-  //console.log(pull);
+  const pull = execSync("git pull --ff-only", execOptions).toString();
+  console.log(pull);
   const push = execSync("git push --force heroku main", execOptions).toString();
   console.log(push);
 };
