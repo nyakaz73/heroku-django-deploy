@@ -87,7 +87,7 @@ addRemote = ({ app_name }) => {
     //Setting default branch to main
     console.log("initializing branch");
     const initBranch = execSync(
-      "git config --global init.defaultBranch main",
+      "heroku git config --global init.defaultBranch main",
       execOptions
     ).toString();
     console.log("After initalsing branch");
