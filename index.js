@@ -85,10 +85,12 @@ addRemote = ({ app_name }) => {
     const gitInit = execSync("git init", execOptions).toString();
     console.log(gitInit);
     //Setting default branch to main
+    console.log("initializing branch");
     const initBranch = execSync(
       "git config --global init.defaultBranch main",
       execOptions
     ).toString();
+    console.log("After initalsing branch");
     console.log(initBranch);
     const remote = execSync(
       `heroku git:remote -a ${app_name}`,
