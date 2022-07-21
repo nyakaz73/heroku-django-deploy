@@ -14,7 +14,7 @@ heroku-django deploy uses three methods to deploy your Django app to heroku ie
 Unless you are using git make sure you have a **Procfile** or a **Dockerfile**  or a **heroku.yml** in your project root directory together with the **requirements.txt** file.
 
 ## *****NB BRANCH CHANGE UPDATE master to main*******
-Git and Herouku change their main branches from **master** to **main** ,so in this package  have added mandatory **git_branch**  tag that lets you specify your git default branch you want to push from.
+Git and Herouku change their main branches from **master** to **main** ,so in this package i have added mandatory **git_branch**  tag that lets you specify your git default branch you want to push from.
 
 ### 1. Deploy with git
 By default if you dont specify the deployment option it will use git or else altenatively specify the **use_git: true** option in the with tag.  see example below.
